@@ -15,7 +15,7 @@ class Quiz extends StatefulWidget {
 class QuizState extends State<Quiz> {
   @override
   Widget build(BuildContext context) {
-    var themeHelper = ThemeHelper.singleTone(this);
+    var themeHelper = ThemeHelper(this);
 
     return MaterialApp(
       theme: themeHelper.setTheme(),

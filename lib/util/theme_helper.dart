@@ -3,11 +3,17 @@ import 'package:quiz_flutter_version/main.dart';
 
 class ThemeHelper {
   QuizState? _state;
-  ThemeHelper.singleTone(this._state);
 
-  static final ThemeHelper _helper = ThemeHelper.singleTone(null);
+  ThemeHelper._singleTone(this._state);
 
-  factory ThemeHelper() => _helper;
+  static ThemeHelper _helper = ThemeHelper._singleTone(null);
+
+  factory ThemeHelper([QuizState? state]) {
+    if (_helper._state == null && state != null) {
+      _helper = ThemeHelper._singleTone(state);
+    }
+    return _helper;
+  }
 
   final _themeList = <ThemeData>[
     ThemeData(primarySwatch: Colors.amber),
@@ -22,17 +28,18 @@ class ThemeHelper {
   ThemeData setTheme() => _themeList[_index];
 
   void nextTheme() {
-    _index++;
-
-    _helper._state?.setState(() {
-    });
+    _helper._state?.setState(
+      () {
+        _index++;
+      },
+    );
   }
 
   void previousTheme() {
-    _index--;
-    _helper._state?.setState(() {
-
-    });
-
+    _helper._state?.setState(
+      () {
+        _index--;
+      },
+    );
   }
 }
