@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_flutter_version/pages/first_page.dart';
+import 'package:quiz_flutter_version/util/theme_helper.dart';
 
 void main() {
   runApp(const Quiz());
@@ -9,9 +10,10 @@ class Quiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeHelper().setTheme(),
       title: "Quiz",
-      home: FirstPage(),
+      home: const FirstPage(),
     );
   }
 }

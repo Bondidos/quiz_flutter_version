@@ -1,46 +1,58 @@
-class Questions{
+import '../constants.dart';
+
+class Questions {
   var list = <Question>[
     Question(
-        question: "What is Flutter?",
-        suggestion1: "Programming language",
-        suggestion2: "Free and open-source mobile UI framework ",
-        suggestion3: "Pet's name",
-        suggestion4: "Android native developing framework",
-        suggestion5: "IOS native developing framework"
+      question: "What is the Flutter?",
+      suggestion1: "Programming language",
+      suggestion2: "Free and open-source mobile UI framework ",
+      suggestion3: "Pet's name",
+      suggestion4: "Android native developing framework",
+      suggestion5: "IOS native developing framework",
+      answer: Answer.second,
     ),
     Question(
-        question: "Flutter's programming language:",
-        suggestion1: "Java",
-        suggestion2: "Kotlin",
-        suggestion3: "C++",
-        suggestion4: "Dart",
-        suggestion5: "JavaScript"
+      question: "Flutter uses:",
+      suggestion1: "Java",
+      suggestion2: "Kotlin",
+      suggestion3: "C++",
+      suggestion4: "Dart",
+      suggestion5: "JavaScript",
+      answer: Answer.fourth,
     ),
     Question(
-        question: "Flutter's virtual machine feature:",
-        suggestion1: "Hot reload",
-        suggestion2: "Declarative UI",
-        suggestion3: "Widgets",
-        suggestion4: "Dart",
-        suggestion5: "Multiplatform"
+      question: "Flutter's feature:",
+      suggestion1: "Hot reload",
+      suggestion2: "Declarative UI",
+      suggestion3: "Widgets",
+      suggestion4: "Dart",
+      suggestion5: "Multiplatform",
+      answer: Answer.first,
     ),
     Question(
-        question: "What platforms does Flutter earn on?",
-        suggestion1: "Desktop",
-        suggestion2: "Android",
-        suggestion3: "Web",
-        suggestion4: "IOS",
-        suggestion5: "All of listed"
+      question: "Platforms supported by Flutter?",
+      suggestion1: "Desktop",
+      suggestion2: "Android",
+      suggestion3: "Web",
+      suggestion4: "IOS",
+      suggestion5: "All listed",
+      answer: Answer.fifth,
     ),
     Question(
-        question: "In Flutter how do you can use Android api?",
-        suggestion1: "Can't",
-        suggestion2: "Can directly from Dart Code",
-        suggestion3: "Can, writing code in android dir",
-        suggestion4: "Can only with Android Studio",
-        suggestion5: "Can using plugin"
+      question:
+          "In Flutter how do you can use Android native functions, like Intent?",
+      suggestion1: "Can't",
+      suggestion2: "Yes, directly from Dart Code",
+      suggestion3: "Yes, by writing Kotlin code in Android directory",
+      suggestion4: "Yes, only with Android Studio",
+      suggestion5: "Yes, by using plugin",
+      answer: Answer.fifth,
     ),
   ];
+
+  String isAnswersCorrect(Map<Question, Answer> answers) {
+    return '';
+  }
 }
 
 class Question {
@@ -50,6 +62,7 @@ class Question {
   String suggestion3;
   String suggestion4;
   String suggestion5;
+  Answer answer;
 
   Question({
     required this.question,
@@ -58,5 +71,9 @@ class Question {
     required this.suggestion3,
     required this.suggestion4,
     required this.suggestion5,
+    required this.answer,
   });
+
+  @override
+  String toString() => question;
 }
