@@ -5,13 +5,20 @@ import 'package:quiz_flutter_version/util/theme_helper.dart';
 void main() {
   runApp(const Quiz());
 }
-class Quiz extends StatelessWidget {
+class Quiz extends StatefulWidget {
   const Quiz({Key? key}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => QuizState();
+}
+
+class QuizState extends State<Quiz> {
+  @override
   Widget build(BuildContext context) {
+    var themeHelper = ThemeHelper.singleTone(this);
+
     return MaterialApp(
-      theme: ThemeHelper().setTheme(),
+      theme: themeHelper.setTheme(),
       title: "Quiz",
       home: const FirstPage(),
     );
