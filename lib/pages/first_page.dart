@@ -24,6 +24,7 @@ class _FirstPageState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: backArrowNavigation(),
         title: Text('Question ${_index + 1}'),
       ),
       body: Padding(
@@ -163,5 +164,14 @@ class _FirstPageState extends State<FirstPage> {
       _answer = _answer_store[_questions.list[_index]];
       _themeHelper.previousTheme();
     });
+  }
+
+  backArrowNavigation() {
+    return (_index != 0) ? IconButton(
+      onPressed: () {
+        onPreviousPressed();
+      },
+      icon: const Icon(Icons.arrow_back),
+    ) : null;
   }
 }
