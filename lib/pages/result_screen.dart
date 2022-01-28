@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ResultScreen extends StatelessWidget {
-  final String result;
+  final List<String> result;
 
   const ResultScreen({Key? key, required this.result}) : super(key: key);
 
@@ -17,9 +18,11 @@ class ResultScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(result),
+              Text(result.first),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                 print( SystemChannels.platform);
+                },
                 icon: const Icon(Icons.restart_alt_sharp),
               ),
               IconButton(

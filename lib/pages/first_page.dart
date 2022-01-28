@@ -136,7 +136,7 @@ class _FirstPageState extends State<FirstPage> {
           _index++;
           var nextQuestion = _questions.list[_index];
           _answer = _answer_store[nextQuestion];
-         _themeHelper.nextTheme();
+          _themeHelper.nextTheme();
         }
         if (_answer_store.length == 5 && _index == 4) {
           Navigator.push(
@@ -148,14 +148,22 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
-  String makeResult() {
+  List<String> makeResult() {
     StringBuffer str = StringBuffer();
+    List<String> list = [];
     int correctAnswers = 0;
     for (var question in _questions.list) {
       (question.answer == _answer_store[question]) ? correctAnswers++ : null;
     }
-    str.write('Result: $correctAnswers/5');
-    return str.toString();
+    list.add('Result: $correctAnswers/5\n');
+
+    for (var question in _questions.list) {
+      var answer = _answer_store[question];
+      str.write("\n" + question.question);
+      str.write("\nYour answer: ${question.getSuggestion(answer!)} \n");
+    }
+    list.add(str.toString());
+    return list;
   }
 
   void onPreviousPressed() {
@@ -167,11 +175,13 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   backArrowNavigation() {
-    return (_index != 0) ? IconButton(
-      onPressed: () {
-        onPreviousPressed();
-      },
-      icon: const Icon(Icons.arrow_back),
-    ) : null;
+    return (_index != 0)
+        ? IconButton(
+            onPressed: () {
+              onPreviousPressed();
+            },
+            icon: const Icon(Icons.arrow_back),
+          )
+        : null;
   }
 }

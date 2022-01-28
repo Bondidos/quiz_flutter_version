@@ -40,7 +40,7 @@ class Questions {
     ),
     Question(
       question:
-          "In Flutter how do you can use Android native functions, like Intent?",
+      "In Flutter how do you can use Android native functions, like Intent?",
       suggestion1: "Can't",
       suggestion2: "Yes, directly from Dart Code",
       suggestion3: "Yes, by writing Kotlin code in Android directory",
@@ -50,9 +50,6 @@ class Questions {
     ),
   ];
 
-  String isAnswersCorrect(Map<Question, Answer> answers) {
-    return '';
-  }
 }
 
 class Question {
@@ -76,4 +73,19 @@ class Question {
 
   @override
   String toString() => question;
+
+  String getSuggestion(Answer answer) {
+    switch (answer) {
+      case Answer.first:
+        return suggestion1;
+      case Answer.second:
+        return suggestion2;
+      case Answer.third:
+        return suggestion3;
+      case Answer.fourth:
+        return suggestion4;
+      case Answer.fifth:
+        return suggestion5;
+    }
+  }
 }
