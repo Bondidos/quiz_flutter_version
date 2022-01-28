@@ -61,7 +61,8 @@ class ResultScreen extends StatelessWidget {
                   icon: const Icon(Icons.share),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   icon: const Icon(Icons.close),
                 ),
               ],
