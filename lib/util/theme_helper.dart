@@ -42,4 +42,10 @@ class ThemeHelper {
       },
     );
   }
+
+  void reset(){
+    _helper._state?.setState(() {
+      _index = 0;
+    });
+  }
 }

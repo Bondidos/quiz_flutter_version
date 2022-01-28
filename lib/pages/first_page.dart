@@ -17,102 +17,112 @@ class _FirstPageState extends State<FirstPage> {
   final Questions _questions = Questions();
   var _index = 0;
   final _themeHelper = ThemeHelper();
+  final Map<Question, Answer?> _answer_store = {};
 
-  Map<Question, Answer?> _answer_store = {};
+  Future<bool> _onWillPop(BuildContext context) async{
+    bool? exitResult = await showDialog(
+        builder: (BuildContext context) => exitDialog(context),
+        context: context,
+    );
+    return exitResult ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: backArrowNavigation(),
-        title: Text('Question ${_index + 1}'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                _questions.list[_index].question,
-                style: questionStyle,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: backArrowNavigation(),
+          title: Text('Question ${_index + 1}'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _questions.list[_index].question,
+                  style: questionStyle,
+                ),
               ),
-            ),
-            RadioListTile<Answer>(
-              title: Text(_questions.list[_index].suggestion1),
-              value: Answer.first,
-              groupValue: _answer,
-              onChanged: (Answer? value) {
-                _onCheck(value);
-              },
-            ),
-            RadioListTile<Answer>(
-              title: Text(_questions.list[_index].suggestion2),
-              value: Answer.second,
-              groupValue: _answer,
-              onChanged: (Answer? value) {
-                _onCheck(value);
-              },
-            ),
-            RadioListTile<Answer>(
-              title: Text(_questions.list[_index].suggestion3),
-              value: Answer.third,
-              groupValue: _answer,
-              onChanged: (Answer? value) {
-                _onCheck(value);
-              },
-            ),
-            RadioListTile<Answer>(
-              title: Text(_questions.list[_index].suggestion4),
-              value: Answer.fourth,
-              groupValue: _answer,
-              onChanged: (Answer? value) {
-                _onCheck(value);
-              },
-            ),
-            RadioListTile<Answer>(
-              title: Text(_questions.list[_index].suggestion5),
-              value: Answer.fifth,
-              groupValue: _answer,
-              onChanged: (Answer? value) {
-                _onCheck(value);
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  child: ElevatedButton(
-                    style: qButtonStyle,
-                    onPressed: (_index == 0)
-                        ? null
-                        : () {
-                            onPreviousPressed();
-                          },
-                    child: const Text("Previous question"),
+              RadioListTile<Answer>(
+                title: Text(_questions.list[_index].suggestion1),
+                value: Answer.first,
+                groupValue: _answer,
+                onChanged: (Answer? value) {
+                  _onCheck(value);
+                },
+              ),
+              RadioListTile<Answer>(
+                title: Text(_questions.list[_index].suggestion2),
+                value: Answer.second,
+                groupValue: _answer,
+                onChanged: (Answer? value) {
+                  _onCheck(value);
+                },
+              ),
+              RadioListTile<Answer>(
+                title: Text(_questions.list[_index].suggestion3),
+                value: Answer.third,
+                groupValue: _answer,
+                onChanged: (Answer? value) {
+                  _onCheck(value);
+                },
+              ),
+              RadioListTile<Answer>(
+                title: Text(_questions.list[_index].suggestion4),
+                value: Answer.fourth,
+                groupValue: _answer,
+                onChanged: (Answer? value) {
+                  _onCheck(value);
+                },
+              ),
+              RadioListTile<Answer>(
+                title: Text(_questions.list[_index].suggestion5),
+                value: Answer.fifth,
+                groupValue: _answer,
+                onChanged: (Answer? value) {
+                  _onCheck(value);
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: ElevatedButton(
+                      style: qButtonStyle,
+                      onPressed: (_index == 0)
+                          ? null
+                          : () {
+                        onPreviousPressed();
+                      },
+                      child: const Text("Previous question"),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  child: ElevatedButton(
-                    style: qButtonStyle,
-                    onPressed: (_answer == null)
-                        ? null
-                        : () {
-                            onNextPressed();
-                          },
-                    child: Text(_index == 4 ? 'Finish' : 'Next question'),
+                  Padding(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: ElevatedButton(
+                      style: qButtonStyle,
+                      onPressed: (_answer == null)
+                          ? null
+                          : () {
+                        onNextPressed();
+                      },
+                      child: Text(_index == 4 ? 'Finish' : 'Next question'),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -122,7 +132,7 @@ class _FirstPageState extends State<FirstPage> {
 
   void _onCheck(Answer? value) {
     setState(
-      () {
+          () {
         _answer = value;
         saveAnswer();
       },
@@ -131,7 +141,7 @@ class _FirstPageState extends State<FirstPage> {
 
   void onNextPressed() {
     setState(
-      () {
+          () {
         if (_index < _questions.list.length - 1) {
           _index++;
           var nextQuestion = _questions.list[_index];
@@ -140,13 +150,25 @@ class _FirstPageState extends State<FirstPage> {
         }
         if (_answer_store.length == 5 && _index == 4) {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ResultScreen(result: makeResult())));
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(result: makeResult()),
+            ),
+          );
+          resetScreen();
         }
       },
     );
   }
+
+  void resetScreen() {
+    setState(() {
+      _answer = null;
+      _index = 0;
+    });
+    _themeHelper.reset();
+  }
+
 
   List<String> makeResult() {
     StringBuffer str = StringBuffer();
@@ -163,6 +185,8 @@ class _FirstPageState extends State<FirstPage> {
       str.write("\nYour answer: ${question.getSuggestion(answer!)} \n");
     }
     list.add(str.toString());
+    //clear answers stack
+    _answer_store.clear();
     return list;
   }
 
@@ -177,11 +201,11 @@ class _FirstPageState extends State<FirstPage> {
   backArrowNavigation() {
     return (_index != 0)
         ? IconButton(
-            onPressed: () {
-              onPreviousPressed();
-            },
-            icon: const Icon(Icons.arrow_back),
-          )
+          onPressed: () {
+          onPreviousPressed();
+          },
+          icon: const Icon(Icons.arrow_back),
+    )
         : null;
   }
 }
