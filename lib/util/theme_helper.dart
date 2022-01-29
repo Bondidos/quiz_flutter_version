@@ -43,7 +43,7 @@ class ThemeHelper {
     );
   }
 
-  void reset(){
+  void reset() {
     _helper._state?.setState(() {
       _index = 0;
     });

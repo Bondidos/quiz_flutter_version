@@ -1,4 +1,4 @@
-import '../constants.dart';
+import '../const/constants.dart';
 
 class Questions {
   var list = <Question>[

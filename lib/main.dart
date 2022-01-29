@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_flutter_version/pages/first_page.dart';
+import 'package:quiz_flutter_version/pages/result_screen.dart';
 import 'package:quiz_flutter_version/util/theme_helper.dart';
 
 void main() {
@@ -20,7 +21,11 @@ class QuizState extends State<Quiz> {
     return MaterialApp(
       theme: themeHelper.setTheme(),
       title: "Quiz",
-      home: const FirstPage(),
+      routes: {
+        '/': (context) => const FirstPage(),
+        'resultPage': (context) => const ResultScreen(),
+      },
+      // home: const FirstPage(),
     );
   }
 }

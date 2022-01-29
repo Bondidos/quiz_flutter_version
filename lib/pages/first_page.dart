@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_flutter_version/data_source/questions.dart';
-import 'package:quiz_flutter_version/pages/result_screen.dart';
 import 'package:quiz_flutter_version/util/theme_helper.dart';
 
-import '../constants.dart';
+import '../const/constants.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class _FirstPageState extends State<FirstPage> {
   final Questions _questions = Questions();
   var _index = 0;
   final _themeHelper = ThemeHelper();
-  final Map<Question, Answer?> _answer_store = {};
+  final Map<Question, Answer?> _answerStore = {};
 
   Future<bool> _onWillPop(BuildContext context) async{
     bool? exitResult = await showDialog(
@@ -128,7 +127,7 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
-  void saveAnswer() => _answer_store[_questions.list[_index]] = _answer;
+  void saveAnswer() => _answerStore[_questions.list[_index]] = _answer;
 
   void _onCheck(Answer? value) {
     setState(
@@ -145,15 +144,15 @@ class _FirstPageState extends State<FirstPage> {
         if (_index < _questions.list.length - 1) {
           _index++;
           var nextQuestion = _questions.list[_index];
-          _answer = _answer_store[nextQuestion];
+          _answer = _answerStore[nextQuestion];
           _themeHelper.nextTheme();
         }
-        if (_answer_store.length == 5 && _index == 4) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ResultScreen(result: makeResult()),
-            ),
+        if (_answerStore.length == 5 && _index == 4) {
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              'resultPage',
+              ModalRoute.withName('resultPage'),
+              arguments: makeResult(),
           );
           resetScreen();
         }
@@ -175,25 +174,25 @@ class _FirstPageState extends State<FirstPage> {
     List<String> list = [];
     int correctAnswers = 0;
     for (var question in _questions.list) {
-      (question.answer == _answer_store[question]) ? correctAnswers++ : null;
+      (question.answer == _answerStore[question]) ? correctAnswers++ : null;
     }
     list.add('Result: $correctAnswers/5\n');
 
     for (var question in _questions.list) {
-      var answer = _answer_store[question];
+      var answer = _answerStore[question];
       str.write("\n" + question.question);
       str.write("\nYour answer: ${question.getSuggestion(answer!)} \n");
     }
     list.add(str.toString());
     //clear answers stack
-    _answer_store.clear();
+    _answerStore.clear();
     return list;
   }
 
   void onPreviousPressed() {
     setState(() {
       _index--;
-      _answer = _answer_store[_questions.list[_index]];
+      _answer = _answerStore[_questions.list[_index]];
       _themeHelper.previousTheme();
     });
   }
